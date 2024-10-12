@@ -38,8 +38,10 @@ public class Main {
 
             while (true) {
                 Scanner sc = new Scanner(System.in);
-                echo.echo("", "请输入命令：$ ", false);
+                echo.echo("输入", "命令> $ ", false);
+                System.out.println(ansiColors.GREEN);
                 String str = sc.nextLine();
+                System.out.println(ansiColors.RESET);
                 try {
                     msger.sendMsg(str, false);
                 } catch (Exception e) {
