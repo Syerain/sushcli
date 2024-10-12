@@ -1,6 +1,7 @@
 import top.syewiki.sushcli.utils.*;
 
 import javax.management.InstanceNotFoundException;
+import java.net.ConnectException;
 import java.util.Scanner;
 
 public class Main {
@@ -23,11 +24,11 @@ public class Main {
 
         //START
         while(true) {
-            echo.echo("INFO", "程序初始化完毕.");
-            echo.echo("INFO", "正在尝试连接到主机 ... (syewiki.top:1618)");
+            echo.echo("INFO", "程序初始化中 ... Done.");
+            echo.echo("INFO", "正在尝试连接到主机(syewiki.top:1618) ... ");
 
             try {
-                msger.init(false);
+                msger.sendMsg("测试封头",true);
             } catch (Exception e) {
                 System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠无法连接至主机"+ansiColors.RESET);
                 echo.echo("DEBUG","尝试重新连接 ...");
@@ -38,15 +39,17 @@ public class Main {
 
             while (true) {
                 Scanner sc = new Scanner(System.in);
-                echo.echo("输入", "命令> $ ", false);
-                System.out.println(ansiColors.GREEN);
+                echo.echo("输入命令", "\t> $ ", false);
+                System.out.print(ansiColors.GREEN);
                 String str = sc.nextLine();
-                System.out.println(ansiColors.RESET);
+                System.out.print(ansiColors.RESET);
                 try {
-                    msger.sendMsg(str, false);
+                    //echo.echo("DEBUG","开始发信");
+                    msger.sendMsg(str, true);
+                    //echo.echo("DEBUG","完成发信");
                 } catch (Exception e) {
-                    System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠在尝试发出指令时出错"+ansiColors.RESET);
-                    echo.echo("DEBUG","尝试重新初始化 ...");
+                    System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠与服务器的连接断开"+ansiColors.RESET);
+                    echo.echo("DEBUG","尝试重新连接 ...");
                     break;
                 }
             }

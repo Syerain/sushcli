@@ -44,15 +44,11 @@ public class ClassMsger {
     //向服务端发信
     //发信前初始化io
     public void sendMsg(String msgContent, boolean ifCloseSocket) throws Exception{
-        try {
             this.init(false);
             this.outstrm.write(msgContent.getBytes());
             if (ifCloseSocket) {
                 this.clientSocket.close();
             }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
     }
 
     //从服务端收信
