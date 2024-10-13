@@ -45,12 +45,30 @@ public class Main {
                 System.out.print(ansiColors.RESET);
                 try {
                     //echo.echo("DEBUG","开始发信");
-                    msger.sendMsg(str, true);
+                    msger.sendMsg(str, false);
                     //echo.echo("DEBUG","完成发信");
-                } catch (Exception e) {
+
+                    String msgRcv = msger.rcvMsg(false);
+
+                    echo.echo("主机反馈:", "\t> # ", false);
+                    System.out.print(ansiColors.YELLOW);
+                    System.out.print(msgRcv+"\n");
+                    System.out.print(ansiColors.RESET);
+                }
+                catch (ConnectException e) {
                     System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠与服务器的连接断开"+ansiColors.RESET);
-                    echo.echo("DEBUG","尝试重新连接 ...");
+                    echo.echo("DEBUG","重置连接中 ...");
                     break;
+                }
+                catch (RuntimeException e) {
+                    System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠运行时错误"+ansiColors.RESET);
+                    System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠请重新启动程序"+ansiColors.RESET);
+                    System.exit(0);
+                }
+                catch (Exception e) {
+                    System.out.println(ansiColors.RED+"【"+clocker.getTimeNow()+"】ERROR: \t⚠发生了不明错误"+ansiColors.RESET);
+                    e.printStackTrace();
+                    echo.echo("输入命令", "\t> $ ", false);
                 }
             }
         }
